@@ -1,0 +1,692 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Maven生命周期详解 - Maven中文 - ITeye技术网站</title>
+    <meta name="description" content="Maven强大的一个重要的原因是它有一个十分完善的生命周期模型(lifecycle)，这个生命周期可以从两方面来理解，第一，顾名思义，运行Maven的每个步骤都由它来定义的，这种预定义的默认行为使得我们使用Maven变得简单，相比而言，Ant的每个步骤都要你手工去定义。第二，这个模型是一种标准，在不同的项目中，使用Maven的接口是一样的，这样就不用去仔细理解每个项目的构建了，一般情况下，mvn c ..." />
+    <meta name="keywords" content="maven, 单元测试, 工作, Ant, 框架 Maven生命周期详解" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="Maven中文" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1470389515" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/blue.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1448702469" type="text/javascript"></script>    
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1448702469" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1448702469" type="text/javascript"></script>
+    
+  </head>
+  <body>
+    <div id="header">
+	      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">知识库</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+	      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+	    
+    </div>
+
+    <div id="page">
+        <div id="branding" class="clearfix" style="overflow: hidden;background: none;padding:0 0 2px;">
+        	<ins data-revive-zoneid="184" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+        </div>
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">Maven中文</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://juvenshun.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://juvenshun.iteye.com" class="p-author" target="_blank">juvenshun</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/213959">Maven生命周期详解</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/34725">Maven</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/maven">maven</a><a href="http://www.iteye.com/blogs/tag/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">单元测试</a><a href="http://www.iteye.com/blogs/tag/%E5%B7%A5%E4%BD%9C">工作</a><a href="http://www.iteye.com/blogs/tag/Ant">Ant</a><a href="http://www.iteye.com/blogs/tag/%E6%A1%86%E6%9E%B6">框架</a>&nbsp;</div>
+    	  
+    	
+    	
+  		
+      </div>
+
+  <div id="blog_content" class="blog_content">
+    <p>Maven强大的一个重要的原因是它有一个十分完善的生命周期模型(lifecycle)，这个生命周期可以从两方面来理解，第一，顾名思义，运行Maven的每个步骤都由它来定义的，这种预定义的默认行为使得我们使用Maven变得简单，相比而言，Ant的每个步骤都要你手工去定义。第二，这个模型是一种标准，在不同的项目中，使用Maven的接口是一样的，这样就不用去仔细理解每个项目的构建了，一般情况下，<strong>mvn clean install</strong>
+ 这样的命令是通用的。我想，一定是吸收了许多项目的经验，Maven才能定义出如此完善的模型。</p>
+<p> </p>
+<p>Maven有三套相互独立的生命周期，请注意这里说的是“三套”，而且“相互独立”，初学者容易将Maven的生命周期看成一个整体，其实不然。这三套生命周期分别是：</p>
+<ul>
+<li>Clean Lifecycle 在进行真正的构建之前进行一些清理工作。<br />
+</li>
+<li>Default Lifecycle 构建的核心部分，编译，测试，打包，部署等等。<br />
+</li>
+<li>Site Lifecycle 生成项目报告，站点，发布站点。</li>
+</ul>
+<p>我再次强调一下它们是相互独立的，你可以仅仅调用clean来清理工作目录，仅仅调用site来生成站点。当然你也可以直接运行 <strong>mvn clean install site</strong>
+运行所有这三套生命周期。</p>
+<p> </p>
+<p>知道了每套生命周期的大概用途和相互关系以后，来逐个详细看一下每套生命周期，Clean和Site相对比较简单，先解释一下。</p>
+<p> </p>
+<p>每套生命周期都由一组阶段(Phase)组成，我们平时在命令行输入的命令总会对应于一个特定的阶段。比如，运行<strong>mvn clean</strong>
+，这个的clean是Clean生命周期的一个阶段。有点绕？要知道有Clean生命周期，也有clean阶段。Clean生命周期一共包含了三个阶段：</p>
+<ul>
+<li>pre-clean  执行一些需要在clean之前完成的工作</li>
+<li>clean  移除所有上一次构建生成的文件</li>
+<li>post-clean  执行一些需要在clean之后立刻完成的工作</li>
+</ul>
+<p><strong>mvn clean</strong>
+中的clean就是上面的clean，在一个生命周期中，运行某个阶段的时候，它之前的所有阶段都会被运行，也就是说，<strong>mvn clean</strong>
+ 等同于 <strong>mvn pre-clean clean</strong>
+，如果我们运行 <strong>mvn post-clean</strong>
+，那么 pre-clean，clean 都会被运行。这是Maven很重要的一个规则，可以大大简化命令行的输入。</p>
+<p> </p>
+<p>下面看一下Site生命周期的各个阶段：</p>
+<ul>
+<li>pre-site     执行一些需要在生成站点文档之前完成的工作</li>
+<li>site    生成项目的站点文档</li>
+<li>post-site     执行一些需要在生成站点文档之后完成的工作，并且为部署做准备</li>
+<li>site-deploy     将生成的站点文档部署到特定的服务器上</li>
+</ul>
+<p>这里经常用到的是site阶段和site-deploy阶段，用以生成和发布Maven站点，这可是Maven相当强大的功能，Manager比较喜欢，文档及统计数据自动生成，很好看。</p>
+<p> </p>
+<p>最后，来看一下Maven的最重要的Default生命周期，绝大部分工作都发生在这个生命周期中，这里，我只解释一些比较重要和常用的阶段：</p>
+<ul>
+<li>validate</li>
+<li>generate-sources</li>
+<li>process-sources</li>
+<li>generate-resources</li>
+<li>process-resources     复制并处理资源文件，至目标目录，准备打包。</li>
+<li>compile     编译项目的源代码。</li>
+<li>process-classes</li>
+<li>generate-test-sources  </li>
+<li>process-test-sources <br />
+</li>
+<li>generate-test-resources</li>
+<li>process-test-resources     复制并处理资源文件，至目标测试目录。</li>
+<li>test-compile     编译测试源代码。</li>
+<li>process-test-classes </li>
+<li>test     使用合适的单元测试框架运行测试。这些测试代码不会被打包或部署。</li>
+<li>prepare-package </li>
+<li>package     接受编译好的代码，打包成可发布的格式，如 JAR 。</li>
+<li>pre-integration-test</li>
+<li>integration-test</li>
+<li>post-integration-test </li>
+<li>verify </li>
+<li>install     将包安装至本地仓库，以让其它项目依赖。</li>
+<li>deploy     将最终的包复制到远程的仓库，以让其它开发人员与项目共享。</li>
+</ul>
+<p>基本上，根据名称我们就能猜出每个阶段的用途，关于其它阶段的解释，请参考 <a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html </a>
+</p>
+<p> </p>
+<p>记住，运行任何一个阶段的时候，它前面的所有阶段都会被运行，这也就是为什么我们运行<strong>mvn install</strong>
+的时候，代码会被编译，测试，打包。</p>
+<p> </p>
+<p>此外，Maven的插件机制是完全依赖Maven的生命周期的，因此理解生命周期至关重要，在之后的文章里，我将会进一步解释Maven的插件机制。</p>
+  </div>
+
+  
+
+  
+  <ins data-revive-zoneid="171" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+  
+
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'><strong>47</strong> <br/>顶</div><div class='digged'><strong>3</strong> <br/>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/216671" class="next" title="译作《Maven权威指南》部分章节发布">译作《Maven权威指南》部分章节发布</a>
+      |
+      <a href="/blog/209484" class="pre" title="《Dr.Dobb's软件研发》对Maven之父的访谈">《Dr.Dobb's软件研发》对Maven之父的访谈</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2008-07-11 15:51</li>
+      <li>浏览 63685</li>
+      <li><a href="#comments">评论(16)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/develop">研发管理</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/213959" target="_blank" class="more">相关推荐</a></li>
+    </ul>    
+  </div>
+  
+		    
+		
+<div class="boutique-curr-box blog_comment">
+	  <div class="boutique-curr clearfix">
+	    <h5 class="h3titles">参考知识库</h5>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/ios"><img src="http://img.knowledge.csdn.net/upload/base/1472802208692_692.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/ios" classs="title">iOS知识库</a>
+              <span>
+                 <em>245</em>&nbsp;&nbsp;关注 <i>|</i> <em>914</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/liveplay"><img src="http://img.knowledge.csdn.net/upload/base/1472614759773_773.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/liveplay" classs="title">直播技术知识库</a>
+              <span>
+                 <em>1147</em>&nbsp;&nbsp;关注 <i>|</i> <em>717</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/agile"><img src="http://img.knowledge.csdn.net/upload/base/1471918993092_92.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/agile" classs="title">敏捷知识库</a>
+              <span>
+                 <em>788</em>&nbsp;&nbsp;关注 <i>|</i> <em>119</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/go"><img src="http://img.knowledge.csdn.net/upload/base/1471395508721_721.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/go" classs="title">Go知识库</a>
+              <span>
+                 <em>490</em>&nbsp;&nbsp;关注 <i>|</i> <em>635</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	  </div>
+</div>
+ 		
+      
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2386508">
+  <div class="comment_title">
+    16 楼
+    <a href='http://renzhigen12.iteye.com' target='_blank' title='renzhigen12'>renzhigen12</a>
+    2016-03-16&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><img src="/images/smiles/icon_idea.gif" /> </div>
+</div>
+
+<div id="bc2381175">
+  <div class="comment_title">
+    15 楼
+    <a href='http://mpxsq.iteye.com' target='_blank' title='mpxsq'>mpxsq</a>
+    2015-11-05&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><div class="quote_title">ycyangcai 写道</div><div class="quote_div">请问下：<br /><br />maven绑定两个插件在相同生命周期的时候，如何配置这两个插件的执行的先后顺序<br /></div><br /><br />(Note: In Maven 2.0.5 and above, multiple goals bound to a phase are executed in the same order as they are declared in the POM, however multiple instances of the same plugin are not supported. Multiple instances of the same plugin are grouped to execute together and ordered in Maven 2.0.11 and above).</div>
+</div>
+
+<div id="bc2375885">
+  <div class="comment_title">
+    14 楼
+    <a href='http://2793788826.iteye.com' target='_blank' title='springdata_springmvc'>springdata_springmvc</a>
+    2015-08-01&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">可以参考最新的文档：<br /><a rel="nofollow" href="http://www.zuidaima.com/blog/1618180875144192.htm" target="_blank">如何在eclipse jee中检出项目并转换为Maven project,最后转换为Dynamic web project</a>，地址：<a rel="nofollow" href="http://www.zuidaima.com/blog/1618180875144192.htm" target="_blank">http://www.zuidaima.com/blog/1618180875144192.htm</a><br /><a rel="nofollow" href="http://www.zuidaima.com/blog/1618162161323008.htm" target="_blank">如何在eclipse jee中创建Maven project并且转换为Dynamic web project</a><br />地址：<a rel="nofollow" href="http://www.zuidaima.com/blog/1618162161323008.htm" target="_blank">http://www.zuidaima.com/blog/1618162161323008.htm</a><br /></div>
+</div>
+
+<div id="bc2368573">
+  <div class="comment_title">
+    13 楼
+    <a href='http://ycyangcai.iteye.com' target='_blank' title='ycyangcai'>ycyangcai</a>
+    2015-03-10&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">请问下：<br /><br />maven绑定两个插件在相同生命周期的时候，如何配置这两个插件的执行的先后顺序<br /></div>
+</div>
+
+<div id="bc2365133">
+  <div class="comment_title">
+    12 楼
+    <a href='http://lenki013.iteye.com' target='_blank' title='lenki013'>lenki013</a>
+    2014-12-22&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">拜读了！<img src="/images/smiles/icon_idea.gif" /> </div>
+</div>
+
+<div id="bc2361410">
+  <div class="comment_title">
+    11 楼
+    <a href='http://changxianbest.iteye.com' target='_blank' title='changxianbest'>changxianbest</a>
+    2014-10-25&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">写得很好！</div>
+</div>
+
+<div id="bc2334419">
+  <div class="comment_title">
+    10 楼
+    <a href='http://flywill2010.iteye.com' target='_blank' title='flywill2010'>flywill2010</a>
+    2013-12-13&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><img src="/images/smiles/icon_idea.gif" />&nbsp; 讲的很明白，谢了</div>
+</div>
+
+<div id="bc2333044">
+  <div class="comment_title">
+    9 楼
+    <a href='http://huntfor.iteye.com' target='_blank' title='huntfor'>huntfor</a>
+    2013-11-30&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">新手求问po主，mvn clean install，只执行从clean开始到install即： clean-&gt; post-clean; validate -&gt; install 还是分别执行两个生命周期。即 pre clean -&gt; clean； 然后 validate -&gt; install;按照博文所写，这三个生命周期是相互独立的，应该是后者。求po主证实<img src="/images/smiles/icon_biggrin.gif" /> <br /></div>
+</div>
+
+<div id="bc2331529">
+  <div class="comment_title">
+    8 楼
+    <a href='http://rogerming.iteye.com' target='_blank' title='Roger111'>Roger111</a>
+    2013-11-17&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><div class="quote_title">renlei413326889 写道</div><div class="quote_div">请教一下，为什么看到好多Maven的命令都是这种:mvn clean compile、mvn clean test、mvn clean install,都有clean选项，好像有时候也不需要clean的。有一点点迷惑，望能指点一下~</div><br />我觉得clean也算是一种习惯吧，它可以避免一些错误的发生。clean的主要功能是删除maven生成的target文件，如果不执行clean，而直接install的话，其过程中生成的如.class文件就会覆盖原来的文件，这在一般情况下是没有问题的。但是，比如你在源文件删除了一个java，结果没有clean，则它依然存在与target中，可能会对最终的结果造成影响。</div>
+</div>
+
+<div id="bc2296612">
+  <div class="comment_title">
+    7 楼
+    <a href='http://boleyn.iteye.com' target='_blank' title='renlei413326889'>renlei413326889</a>
+    2013-01-08&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">请教一下，为什么看到好多Maven的命令都是这种:mvn clean compile、mvn clean test、mvn clean install,都有clean选项，好像有时候也不需要clean的。有一点点迷惑，望能指点一下~</div>
+</div>
+
+<div id="bc2286167">
+  <div class="comment_title">
+    6 楼
+    <a href='http://wuaner.iteye.com' target='_blank' title='Wuaner'>Wuaner</a>
+    2012-10-22&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">“在一个生命周期中，运行某个阶段的时候，它之前的所有阶段都会被运行，也就是说，mvn clean 等同于 mvn pre-clean clean ，如果我们运行 mvn post-clean ，那么 pre-clean，clean 都会被运行。这是Maven很重要的一个规则，可以大大简化命令行的输入。”。<br /><br />楼主这句话点睛之笔！！！理解这个，我觉得才是理解maven中lifecycle &amp; phase 的关键。<br /><br />goal比较容易理解：goal是plugin的东西，是一个plugin中的Mojo文件（moji文件就是goal的定义文件，多由java文件或bellshell脚本编写）实现的特定目标。可以说：Mojo即goal。<br />goal也是可以单独调用的，调用的标准格式为：mvn groupId:artifactId:version:goal（如org.apache.maven.plugins:maven-compiler-plugin:2.5.1:compile）。在遵从了“约定优于配置“的前提后，这种对goal的直接调用的格式最终可以简化为：${prefix}：goal（如compiler:compile），其中${prefix}是artifactId的约定格式“maven-${prefix}-plugin”的中间部分。<br /><br />最后，lifecycle的phase都和一个特定的goal相绑定，亦即，phase所提供的功能，其实是其所绑定的goal完成的。如 default lifecycle的compile这个phase，绑定的就是compiler:compile（maven-compiler-plugin插件的compile这个goal）。加上引用楼主的话，要强调的是：单独执行一个特定的goal，和单独执行一个与该goal绑定的某lifecycle的phase，过程及结果不见得是相同的，因为“在一个生命周期中，运行某个phase的时候，它之前的所有phase都会被运行”。</div>
+</div>
+
+<div id="bc2280306">
+  <div class="comment_title">
+    5 楼
+    <a href='http://zdnuist.iteye.com' target='_blank' title='zdnuist'>zdnuist</a>
+    2012-09-05&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">不错学习了</div>
+</div>
+
+<div id="bc2243505">
+  <div class="comment_title">
+    4 楼
+    <a href='http://finger-zhou.iteye.com' target='_blank' title='Finger_Zhou'>Finger_Zhou</a>
+    2012-02-17&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">老大的文章很是经典啊 </div>
+</div>
+
+<div id="bc2223691">
+  <div class="comment_title">
+    3 楼
+    <a href='http://emilyzhanghong.iteye.com' target='_blank' title='emilyzhanghong'>emilyzhanghong</a>
+    2011-10-20&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">很好的文章,学习了..<img src="/images/smiles/icon_biggrin.gif" /> </div>
+</div>
+
+<div id="bc1076100">
+  <div class="comment_title">
+    2 楼
+    <a href='http://alloyer.iteye.com' target='_blank' title='alloyer'>alloyer</a>
+    2009-07-02&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">非常好的文章</div>
+</div>
+
+<div id="bc991663">
+  <div class="comment_title">
+    1 楼
+    <a href='http://toopoo.iteye.com' target='_blank' title='toopoo'>toopoo</a>
+    2009-05-04&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">讲的很全啊，支持</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 213959;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'Maven生命周期详解');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'Maven生命周期详解');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://juvenshun.iteye.com'><img alt="juvenshun的博客" class="logo" src="http://www.iteye.com/upload/logo/user/424048/dbc2f4de-27aa-3d86-ab99-3617bb2a5424.png?1298493091" title="juvenshun的博客: Maven中文" width="" /></a></div>
+  <div id="blog_owner_name">juvenshun</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 1119951 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1448702469" title="男" /></li>
+              <li>来自: 苏州</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://szjszj.iteye.com' target='_blank'><img alt="szjszj的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="szjszj的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://szjszj.iteye.com' target='_blank' title='szjszj'>szjszj</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://sheertewtw.iteye.com' target='_blank'><img alt="sheertewtw的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="sheertewtw的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://sheertewtw.iteye.com' target='_blank' title='sheertewtw'>sheertewtw</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://stamen.iteye.com' target='_blank'><img alt="stamen的博客" class="logo" src="http://www.iteye.com/upload/logo/user/31849/5527409c-15ab-4a97-b764-977ed2c4704f-thumb.jpg?1236833324" title="stamen的博客: stamen的程序员之路" width="48px" /></a></div>
+                <div class="left"><a href='http://stamen.iteye.com' target='_blank' title='stamen'>stamen</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://rubyq.iteye.com' target='_blank'><img alt="rubyq的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="rubyq的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://rubyq.iteye.com' target='_blank' title='rubyq'>rubyq</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (56)</a></li>
+                
+                  <li><a href="/category/34725">Maven (61)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (5)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (15)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (2)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2010-11">2010-11</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2010-04">2010-04</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2010-03">2010-03</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://huaqianghua.iteye.com' target='_blank' title='huaqianghua'>huaqianghua</a>： 
+                  清晰明了！多谢！<br />
+                  <a href="/blog/305865#bc2391802">Maven最佳实践：划分模块</a>
+                </li>
+                
+                <li>
+                  <a href='http://zlele.iteye.com' target='_blank' title='zlele'>zlele</a>： 
+                  Plugin execution not covered by ...<br />
+                  <a href="/blog/207326#bc2391365">使用maven-sql-plugin实现持续数据库集成(CDBI) </a>
+                </li>
+                
+                <li>
+                  <a href='http://zlele.iteye.com' target='_blank' title='zlele'>zlele</a>： 
+                  endual 写道tzq668766 写道juven，我在用s ...<br />
+                  <a href="/blog/207326#bc2391363">使用maven-sql-plugin实现持续数据库集成(CDBI) </a>
+                </li>
+                
+                <li>
+                  <a href='http://xiniu-0123.iteye.com' target='_blank' title='xiniu_0123'>xiniu_0123</a>： 
+                  学到很多 十分感谢<br />
+                  <a href="/blog/305865#bc2390434">Maven最佳实践：划分模块</a>
+                </li>
+                
+                <li>
+                  <a href='http://sd739898.iteye.com' target='_blank' title='sd739898'>sd739898</a>： 
+                  谢谢分享，最近正在考虑版本管理的优化。<br />
+                  <a href="/blog/376422#bc2390387">Maven最佳实践：版本管理</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+        <div style="margin-top: 10px;float: left;clear: left;">
+					<ins data-revive-zoneid="185" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+				</div>
+      </div>    
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2016 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+        <ins data-revive-zoneid="186" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6162091-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+      
+    
+    <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/async_new.js"></script>
+<script src="http://c.csdnimg.cn/public/common/libs/jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">var $csdn_iteye_jq = jQuery.noConflict();// 解决jq与prototype.js命名空间冲突的问题</script>
+<script src="http://ads.csdn.net/js/tracking.js" type="text/javascript"></script>
+    
+	    
+	    <script src="http://www.iteye.com/javascripts/web-storage-cache.min.js?1461122561" type="text/javascript"></script>
+	    <script src="http://www.iteye.com/javascripts/replace.min.js?1464163001" type="text/javascript"></script>
+    
+    
+  </body>
+</html>

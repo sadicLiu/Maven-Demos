@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)http://www.cnblogs.com/Brake/p/maven_coordinate_and_dependency.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/encoder.js.下载"></script><style id="stndz-style"></style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maven(2)-坐标和依赖 - iBrake - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/bundle-darkgreentrip.css">
+<link type="text/css" rel="stylesheet" href="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/220591.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/bundle-darkgreentrip-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/Brake/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/Brake/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/Brake/wlwmanifest.xml">
+<script src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/jquery.js.下载" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'Brake', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/Brake/"><img id="blogLogo" src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/Brake/">Brake</a></h1>
+<h2></h2><h2><strong>Catch Spark. Code Life</strong></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/Brake/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/iBrake">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/Brake/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/Brake/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 52&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 25</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/Brake/p/maven_coordinate_and_dependency.html">Maven(2)-坐标和依赖</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">本文简要介绍Maven里面的坐标（coodinate)以及maven依赖管理（Dependency）</span></p>
+<p><strong><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">一、坐标</span></strong></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">先来个截图：</span><br><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;"><img src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/737467-20151019224203911-1550807972.png" alt=""></span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">在上图peoject栏目有groupId,artifactId,version，这个就是maven中坐标的概念，这三个属性能够唯一定位一个java架包，其中：</span></p>
+<ul>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">groupId代表架包所在的组织（package的概念)，比如com.cnblogs</span></li>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">artifactId是一个单独架包（项目）的唯一表示</span></li>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">version代表当前项目的版本号</span></li>
+
+
+
+</ul>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">另外坐标还有个packaging属性，代表项目的类型，默认是jar，描述了项目打包后的输出。</span></p>
+<ul>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">类型为jar的项目产生一个</span><em id="__mceDel"><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">JAR文件</span></em></li>
+<li><em id="__mceDel"><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">类型为war的项目产生一个web应用。</span></em></li>
+
+
+
+</ul>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">在maven项目中groupId,artifactId,version就代表一个项目的坐标，其他项目可以通过这个几个坐标属性唯一单位到当前项目。</span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;"><img src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/737467-20151019224543349-859843252.png" alt=""></span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">上图中，通过junit的唯一坐标可以订位到junit4.12，然后在项目中进行使用。</span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">maven仓库就是通过这些坐标来组织maven项目的，当项目指定了依赖的坐标后，项目就可以从maven的远程仓库中找到对应的maven项目，当相应坐标的maven项目已经在本地仓库时，项目会自动使用本地仓库坐标所能匹配的项目，而不会再从远程仓库下载。</span></p>
+<p><strong><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">二、依赖管理</span></strong></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">maven坐标是maven项目的核心，依赖是通过maven坐标来实习的，上面的例子其实已经很好的演示了maven中的依赖：通过在pom文件中增加Dependency选项来完成，Dependency选项中会直接项目所依赖的项目的坐标。</span></p>
+<p><strong><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">2.1 传递性依赖</span></strong></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;"><img src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/737467-20151019225509677-9778094.png" alt=""></span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">在上图中，当前项目啊依赖与项目b和c，b项目依赖与项目d，c项目依赖于项目e。在maven中对于当前项目来说，只需要关注b和c。也就是说，在当前项目a的pom文件中只需要配置对于b和c的依赖，d和e的传递依赖maven会自动进行加载，而无需当前项目a进行关注，这是maven的强大之一（能够很好的管理依赖）</span></p>
+<p><strong><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">2.2 依赖范围</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>4.12<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+       <strong> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span>test<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">scope</span><span style="color: #0000ff;">&gt;</span></strong>
+    <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span></span></pre>
+</div>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">上面的依赖配置中多了个scope选项，scope选项指定了maven依赖生效的范围，上面的例子范围是test，说明它在Compiler插件运行compile目标的时候是不可用的。它只有在运行compiler:testCompile和surefire:test目标的时候才会被加入到classpath中。</span><br><br class="Apple-interchange-newline"></p></div><div id="MySignature" style="display: block;"><div id="AllanboltSignature">    
+        <div>作者：<a href="http://www.cnblogs.com/Brake/" target="_blank">iBrake</a></div>
+        <div>出处：<a href="http://www.cnblogs.com/Brake/" target="_blank">http://www.cnblogs.com/Brake/</a></div>
+        <div>本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.</div>  
+    </div></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/Brake/category/744744.html" target="_blank">[09]代码构建</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/Brake/tag/maven/">maven</a>, <a href="http://www.cnblogs.com/Brake/tag/java/">java</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(4893338,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/Brake/" target="_blank"><img src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/20151115183349.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/Brake/">iBrake</a><br>
+            <a href="http://home.cnblogs.com/u/Brake/followees">关注 - 3</a><br>
+            <a href="http://home.cnblogs.com/u/Brake/followers">粉丝 - 17</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(4893338,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(4893338,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/Brake/p/maven_install_and_config.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/Brake/p/maven_install_and_config.html" title="发布于2015-10-15 22:22">Maven(1)-安装和配置</a><br><a href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html" title="发布于2015-10-20 23:18">Maven(3)-利用intellij idea创建maven web项目</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2015-10-19 23:06</span> <a href="http://www.cnblogs.com/Brake/">iBrake</a> 阅读(<span id="post_view_count">215</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=4893338" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/Brake/p/maven_coordinate_and_dependency.html#" onclick="AddToWz(4893338);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=220591,cb_entryId=4893338,cb_blogApp=currentBlogApp,cb_blogUserGuid='da4f5a3a-f5d5-e411-b908-9dcfd8948a71',cb_entryCreatedDate='2015/10/19 23:06:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/Brake/p/maven_coordinate_and_dependency.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/Brake/p/maven_coordinate_and_dependency.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/76017.html" target="_blank">【活动】一元专享1500元微软智能云Azure</a><br></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block">     <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4210569241504288" data-ad-slot="5457903683"></ins></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/562717/" target="_blank">动视裁员</a><br> ·  <a href="http://news.cnblogs.com/n/562716/" target="_blank">小米电视3s48英寸和55英寸版涨价之后，60/65英寸即将涨价</a><br> ·  <a href="http://news.cnblogs.com/n/562715/" target="_blank">陈建军：mBack和腰圆键被抄袭？我不在乎</a><br> ·  <a href="http://news.cnblogs.com/n/562714/" target="_blank">乐视网重组停滞：乐视影业98亿元估值待定</a><br> ·  <a href="http://news.cnblogs.com/n/562713/" target="_blank">小米全面支持岭南通公交卡：这五款手机都可以</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank"><img width="468" height="60" src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/24442-20170118152220281-363324784.jpg" alt=""></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/554260/" target="_blank">「代码家」的学习过程和学习经验分享</a><br> ·  <a href="http://kb.cnblogs.com/page/556770/" target="_blank">写给未来的程序媛</a><br> ·  <a href="http://kb.cnblogs.com/page/558087/" target="_blank">高质量的工程代码为什么难写</a><br> ·  <a href="http://kb.cnblogs.com/page/555750/" target="_blank">循序渐进地代码重构</a><br> ·  <a href="http://kb.cnblogs.com/page/554496/" target="_blank">技术的正宗与野路子</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><a href="http://info.flagcounter.com/iyhy"><img src="./Maven(2)-坐标和依赖 - iBrake - 博客园_files/saved_resource" alt="Free counters!" border="0"></a>
+<br>
+Name：Brake
+<br>
+Email：iBrake@126.com
+<br>
+Location：Shanghai<div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/Brake/">iBrake</a><br>园龄：<a href="http://home.cnblogs.com/u/Brake/" title="入园时间：2015-03-29">1年10个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/Brake/followers/">17</a><br>关注：<a href="http://home.cnblogs.com/u/Brake/followees/">3</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block"></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/Brake/category/755958.html">[01]操作系统(17)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/Brake/category/763336.html">[02]算法数学</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/Brake/category/763334.html">[03]计算机网络</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/Brake/category/685498.html">[04]单元测试(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/Brake/category/768052.html">[05]并发编程</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/Brake/category/747986.html">[06]设计模式(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/Brake/category/686830.html">[07]UML(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/Brake/category/751650.html">[08]并行编程(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/Brake/category/744744.html">[09]代码构建(10)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/Brake/category/773991.html">[10]编程语言(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/Brake/category/774129.html">[11]计划总结(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/Brake/category/821404.html">[12]开发工具(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/Brake/archive/2016/08.html">2016年8月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/Brake/archive/2016/04.html">2016年4月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/Brake/archive/2016/03.html">2016年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/Brake/archive/2016/01.html">2016年1月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/Brake/archive/2015/12.html">2015年12月 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/Brake/archive/2015/11.html">2015年11月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/Brake/archive/2015/10.html">2015年10月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/Brake/archive/2015/05.html">2015年5月 (5)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	14690
+	</li>
+	<li class="liRank">
+		排名 -	16116
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Operating_System_Monitor.html#3587406">1. Re:Operating System-进程/线程内部通信-管程（Monitor）介绍，实现以及应用</a></li>
+        <li class="recent_comment_body">DIY not DRY</li>
+        <li class="recent_comment_author">--青竹梦</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html#3508147">2. Re:一个靠谱的maven仓库镜像地址</a></li>
+        <li class="recent_comment_body">@欢乐天谢谢...</li>
+        <li class="recent_comment_author">--iBrake</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Operating_System_Thread_Part1.html#3498347">3. Re:Operating System-Thread(1)What and Why Thread &amp;&amp;进程和线程的对比</a></li>
+        <li class="recent_comment_body">文章不错</li>
+        <li class="recent_comment_author">--Lumia1020</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Parallel_Programming_Pipeline.html#3498329">4. Re:Parallel Programming-实现并行操作的流水线（生产者、消费者）</a></li>
+        <li class="recent_comment_body">收藏</li>
+        <li class="recent_comment_author">--Lumia1020</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/tomcat_and_servlet_part1.html#3493829">5. Re:Tomcat &amp;&amp; Servlet(1)</a></li>
+        <li class="recent_comment_body">博主做Java开发多久了？</li>
+        <li class="recent_comment_author">--王洪洪</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html">1. Maven(4)-利用intellij idea创建maven 多模块项目(2740)</a></li><li><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html">2. 一个靠谱的maven仓库镜像地址(2058)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part1.html">3. 使用Visual Studio进行单元测试-Part1(1109)</a></li><li><a href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html">4. Maven(3)-利用intellij idea创建maven web项目(771)</a></li><li><a href="http://www.cnblogs.com/Brake/p/UML-Design-Via-Visual-Studio-Class-Diagram.html">5. UML Design Via Visual Studio-Class Diagram(694)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html">1. Maven(4)-利用intellij idea创建maven 多模块项目(4)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part1.html">2. 使用Visual Studio进行单元测试-Part1(3)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part3.html">3. 使用Visual Studio进行单元测试-Part3(2)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part2.html">4. 使用Visual Studio进行单元测试-Part2(2)</a></li><li><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html">5. 一个靠谱的maven仓库镜像地址(2)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2017 iBrake
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+<div class="wsx_fade" style="pointer-events: none;"></div><div class="wsx_scroll" style="display: block; opacity: 0; pointer-events: none; top: 0px; height: 107.589px;"><div class="wsx_scroll_bar" style="background-color: rgb(10, 144, 207); opacity: 0.6; border-radius: 3px; width: 6px; left: 19px;"></div></div></body></html>

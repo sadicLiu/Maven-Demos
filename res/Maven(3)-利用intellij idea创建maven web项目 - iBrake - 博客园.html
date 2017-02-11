@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/encoder.js.下载"></script><style id="stndz-style"></style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/bundle-darkgreentrip.css">
+<link type="text/css" rel="stylesheet" href="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/220591.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/bundle-darkgreentrip-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/Brake/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/Brake/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/Brake/wlwmanifest.xml">
+<script src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/jquery.js.下载" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'Brake', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/Brake/"><img id="blogLogo" src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/Brake/">Brake</a></h1>
+<h2></h2><h2><strong>Catch Spark. Code Life</strong></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/Brake/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/iBrake">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/Brake/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/Brake/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 52&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 25</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html">Maven(3)-利用intellij idea创建maven web项目</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">本文通过一个例子来介绍利用maven来构建一个web项目。开发工具：intellij idea。</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><strong>一、新建maven项目</strong></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020214757052-1616066829.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">此处选择：Create from archetype。表示从已有的maven模版中创建项目，本次选择maven-archetype-webapp模版，选择该模版后，生成的项目会自带webapp所需要的文件。比较方便。当然也可以不选择这个选项，直接创建maven空白项目，后续手动添加web需要的文件。</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020215227786-299508438.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">填写本项目的maven坐标</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020215238614-714609875.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><strong>二、配置maven项目结构</strong></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">最终生成maven项目</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020220633895-678335902.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">上面的项目只包含了web-app所需要的目录结构和基本的maven项目元素：pom。标准的maven项目结构如下：</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020222235692-254790890.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">完善后的项目目录：</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020222255817-2076693011.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">&nbsp;三<strong>、添加一个Servlet</strong></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">这个Servlet功能非常简单：输出一句话。</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><span style="color: #0000ff;">package</span><span style="color: #000000;"> com.cnblogs.kmpp;
+
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.servlet.ServletException;
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.servlet.http.HttpServlet;
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.servlet.http.HttpServletRequest;
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> javax.servlet.http.HttpServletResponse;
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.IOException;
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.PrintWriter;
+
+</span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span> WebAppServlet <span style="color: #0000ff;">extends</span><span style="color: #000000;"> HttpServlet {
+    </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> doGet(HttpServletRequest request,
+                      HttpServletResponse response)
+            </span><span style="color: #0000ff;">throws</span><span style="color: #000000;"> ServletException, IOException {
+        PrintWriter out </span>=<span style="color: #000000;"> response.getWriter();
+        out.println( </span>"WebAppServlet Executed"<span style="color: #000000;"> );
+        out.flush();
+        out.close();
+    }
+}</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">上面的Servlet有对J2EE的依赖，需要在pom中增加对j2ee的依赖。</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.apache.geronimo.specs<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>geronimo-servlet_3.0_spec<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>1.0<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span></span></pre>
+</div>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">配置servlet</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><span style="color: #0000ff;">&lt;!</span><span style="color: #ff00ff;">DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" </span><span style="color: #0000ff;">&gt;</span>
+
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">web-app</span><span style="color: #0000ff;">&gt;</span>
+  <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">display-name</span><span style="color: #0000ff;">&gt;</span>Archetype Created Web Application<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">display-name</span><span style="color: #0000ff;">&gt;</span>
+
+ <span style="color: #0000ff;"> <strong>  &lt;servlet&gt;
+        &lt;servlet-name&gt;WebApp&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;com.cnblogs.kmpp.WebAppServlet&lt;/servlet-class&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;WebApp&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/simple-servlet&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;</strong></span>
+
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">web-app</span><span style="color: #0000ff;">&gt;</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">&nbsp;四<strong>、运行web app</strong></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">web项目的运行可以通过tomcat来实现，但是既然已经使用了maven可以通过一个maven插件来实现这个功能：<a href="http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html" target="_blank">jetty</a>（Jetty&nbsp;是一个开源的servlet容器，它为基于Java的web容器，例如JSP和servlet提供运行环境）。</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">运行jetty：将命令行定位到当前项目的目录下面，输入如下命令：</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020225501114-1756688960.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">得如下结果：</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020225628083-1065311760.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">这个时候jetty已经启动。</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">在浏览器中输入：http://localhost:8080/web-app/。</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020225802630-1539088572.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">&nbsp;</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">这个界面就是web-app默认的index.jsp页面。</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020225906786-94870642.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">上面显示的是默认输出，上面已经定义了一个简单的servlet且配置到了web.xml中。这个时候也可以运行。</span><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">在浏览器中输入：http://localhost:8080/web-app/simple-servlet</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/737467-20151020230053614-695765121.png" alt=""></span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">上面页面的输出就是之前在WebAppServlet中所实现的功能。</span></p>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">至此，一个maven web项目已经建立完毕，且运行成功。</span></p>
+<pre></pre>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">&nbsp;</span></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/Brake/category/744744.html" target="_blank">[09]代码构建</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/Brake/tag/java/">java</a>, <a href="http://www.cnblogs.com/Brake/tag/maven/">maven</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(4896267,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/Brake/" target="_blank"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/20151115183349.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/Brake/">iBrake</a><br>
+            <a href="http://home.cnblogs.com/u/Brake/followees">关注 - 3</a><br>
+            <a href="http://home.cnblogs.com/u/Brake/followers">粉丝 - 17</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(4896267,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(4896267,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/Brake/p/maven_coordinate_and_dependency.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/Brake/p/maven_coordinate_and_dependency.html" title="发布于2015-10-19 23:06">Maven(2)-坐标和依赖</a><br><a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html" title="发布于2015-10-21 22:57">Maven(4)-利用intellij idea创建maven 多模块项目</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2015-10-20 23:18</span> <a href="http://www.cnblogs.com/Brake/">iBrake</a> 阅读(<span id="post_view_count">772</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=4896267" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html#" onclick="AddToWz(4896267);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=220591,cb_entryId=4896267,cb_blogApp=currentBlogApp,cb_blogUserGuid='da4f5a3a-f5d5-e411-b908-9dcfd8948a71',cb_entryCreatedDate='2015/10/20 23:18:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/76017.html" target="_blank">【活动】一元专享1500元微软智能云Azure</a><br></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block">     <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4210569241504288" data-ad-slot="5457903683"></ins></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/562724/" target="_blank">纸质书再次复兴</a><br> ·  <a href="http://news.cnblogs.com/n/562723/" target="_blank">黑客利用WordPress漏洞纂改上百万网页</a><br> ·  <a href="http://news.cnblogs.com/n/562722/" target="_blank">Google Station第一个高速无线网络将在印度部署</a><br> ·  <a href="http://news.cnblogs.com/n/562712/" target="_blank">《遇见大咖》刘强东(二)：自嘲脸盲的他 这样从农村少年走向成功</a><br> ·  <a href="http://news.cnblogs.com/n/562721/" target="_blank">蹭情人节热点：微软Build 2017大会将于2月14日开放注册</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank"><img width="468" height="60" src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/24442-20170118152220281-363324784.jpg" alt=""></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/554260/" target="_blank">「代码家」的学习过程和学习经验分享</a><br> ·  <a href="http://kb.cnblogs.com/page/556770/" target="_blank">写给未来的程序媛</a><br> ·  <a href="http://kb.cnblogs.com/page/558087/" target="_blank">高质量的工程代码为什么难写</a><br> ·  <a href="http://kb.cnblogs.com/page/555750/" target="_blank">循序渐进地代码重构</a><br> ·  <a href="http://kb.cnblogs.com/page/554496/" target="_blank">技术的正宗与野路子</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><a href="http://info.flagcounter.com/iyhy"><img src="./Maven(3)-利用intellij idea创建maven web项目 - iBrake - 博客园_files/saved_resource" alt="Free counters!" border="0"></a>
+<br>
+Name：Brake
+<br>
+Email：iBrake@126.com
+<br>
+Location：Shanghai<div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/Brake/">iBrake</a><br>园龄：<a href="http://home.cnblogs.com/u/Brake/" title="入园时间：2015-03-29">1年10个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/Brake/followers/">17</a><br>关注：<a href="http://home.cnblogs.com/u/Brake/followees/">3</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block"></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/Brake/category/755958.html">[01]操作系统(17)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/Brake/category/763336.html">[02]算法数学</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/Brake/category/763334.html">[03]计算机网络</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/Brake/category/685498.html">[04]单元测试(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/Brake/category/768052.html">[05]并发编程</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/Brake/category/747986.html">[06]设计模式(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/Brake/category/686830.html">[07]UML(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/Brake/category/751650.html">[08]并行编程(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/Brake/category/744744.html">[09]代码构建(10)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/Brake/category/773991.html">[10]编程语言(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/Brake/category/774129.html">[11]计划总结(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/Brake/category/821404.html">[12]开发工具(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/Brake/archive/2016/08.html">2016年8月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/Brake/archive/2016/04.html">2016年4月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/Brake/archive/2016/03.html">2016年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/Brake/archive/2016/01.html">2016年1月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/Brake/archive/2015/12.html">2015年12月 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/Brake/archive/2015/11.html">2015年11月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/Brake/archive/2015/10.html">2015年10月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/Brake/archive/2015/05.html">2015年5月 (5)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	14690
+	</li>
+	<li class="liRank">
+		排名 -	16116
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Operating_System_Monitor.html#3587406">1. Re:Operating System-进程/线程内部通信-管程（Monitor）介绍，实现以及应用</a></li>
+        <li class="recent_comment_body">DIY not DRY</li>
+        <li class="recent_comment_author">--青竹梦</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html#3508147">2. Re:一个靠谱的maven仓库镜像地址</a></li>
+        <li class="recent_comment_body">@欢乐天谢谢...</li>
+        <li class="recent_comment_author">--iBrake</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Operating_System_Thread_Part1.html#3498347">3. Re:Operating System-Thread(1)What and Why Thread &amp;&amp;进程和线程的对比</a></li>
+        <li class="recent_comment_body">文章不错</li>
+        <li class="recent_comment_author">--Lumia1020</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Parallel_Programming_Pipeline.html#3498329">4. Re:Parallel Programming-实现并行操作的流水线（生产者、消费者）</a></li>
+        <li class="recent_comment_body">收藏</li>
+        <li class="recent_comment_author">--Lumia1020</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/tomcat_and_servlet_part1.html#3493829">5. Re:Tomcat &amp;&amp; Servlet(1)</a></li>
+        <li class="recent_comment_body">博主做Java开发多久了？</li>
+        <li class="recent_comment_author">--王洪洪</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html">1. Maven(4)-利用intellij idea创建maven 多模块项目(2741)</a></li><li><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html">2. 一个靠谱的maven仓库镜像地址(2059)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part1.html">3. 使用Visual Studio进行单元测试-Part1(1109)</a></li><li><a href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html">4. Maven(3)-利用intellij idea创建maven web项目(772)</a></li><li><a href="http://www.cnblogs.com/Brake/p/UML-Design-Via-Visual-Studio-Class-Diagram.html">5. UML Design Via Visual Studio-Class Diagram(694)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html">1. Maven(4)-利用intellij idea创建maven 多模块项目(4)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part1.html">2. 使用Visual Studio进行单元测试-Part1(3)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part3.html">3. 使用Visual Studio进行单元测试-Part3(2)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part2.html">4. 使用Visual Studio进行单元测试-Part2(2)</a></li><li><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html">5. 一个靠谱的maven仓库镜像地址(2)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2017 iBrake
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+<div class="wsx_fade" style="pointer-events: none;"></div><div class="wsx_scroll" style="display: block; opacity: 0; pointer-events: none; top: 0px; height: 48.4507px;"><div class="wsx_scroll_bar" style="background-color: rgb(255, 102, 0); opacity: 0.6; border-radius: 3px; width: 6px; left: 19px;"></div></div></body></html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://www.cnblogs.com/Brake/p/maven_pom_optimization.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/encoder.js.下载"></script><style id="stndz-style"></style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maven(5)-优化和重构POM - iBrake - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Maven(5)-优化和重构POM - iBrake - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Maven(5)-优化和重构POM - iBrake - 博客园_files/bundle-darkgreentrip.css">
+<link type="text/css" rel="stylesheet" href="./Maven(5)-优化和重构POM - iBrake - 博客园_files/220591.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./Maven(5)-优化和重构POM - iBrake - 博客园_files/bundle-darkgreentrip-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/Brake/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/Brake/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/Brake/wlwmanifest.xml">
+<script src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/jquery.js.下载" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'Brake', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/Brake/"><img id="blogLogo" src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/Brake/">Brake</a></h1>
+<h2></h2><h2><strong>Catch Spark. Code Life</strong></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/Brake/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/iBrake">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/Brake/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/Brake/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 52&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 25</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/Brake/p/maven_pom_optimization.html">Maven(5)-优化和重构POM</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp;本文主要介绍如何优化pom，杜绝重复（DRY）。</span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp; &nbsp; 1)模块重复依赖；</span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp; &nbsp; 2)坐标版本号重复；</span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp; &nbsp; 3)兄弟依赖</span></p>
+<p>&nbsp;</p>
+<p><strong style="line-height: 1.5;"><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">一、项目骨架</span></strong></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/737467-20151022215910286-1287220479.png" alt=""></span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">上图说明：</span></p>
+<ol>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">multi-module-project是一个有多个模块构成的项目，模块分别为：web-service、web-app、web-dal</span></li>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">web-service、web-app、web-dal分别依赖与log4j</span></li>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">web-app同时依赖web-service和web-dal，因为这三个模块属于同一个project，所以这种依赖叫做兄弟依赖。</span></li>
+</ol>
+<h1><strong><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp;二、模块重复依赖</span></strong></h1>
+<h2><strong><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">2.1 问题</span></strong></h2>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">由于三个模块同时依赖与log4j组件，如果在web-service，web-app，以及web-dal的pom文件中分别都加入对log4j的依赖（首先，这是可以的）就会出现一个问题：当log4j有新的版本出现，且自己的项目想引入这个新版本，由于每个模块都配置了对log4j的依赖，那么就需要在每个模块的pom文件中进行修改，工作量很大，且如果模块多，类似的重复依赖也多，就容易出现有些模块漏修改的问题，容易产生问题。</span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">该问题就犹如有很多重复代码大量存在于不同的模块，当有针对这块重复代码逻辑修改的时候，就需要大量的人力去到处修改，且容易出错。怎么办？代码中的问题可以通过把这个重复代码单独封装，然后多出进行调用。这样有需求变动时只需要修改一个地方即可。</span></p>
+<h2><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">2.2 解决方案</span></h2>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">maven的pom文件优化类似，maven中可以将这些子模块中相同的依赖移到父模块的<strong>dependencyManagement</strong>节点。</span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">最佳实践：如果有两个以上的子模块共同依赖一个组件，那么对于这个组建的依赖就应该放在父模块的<strong>dependencyManagement</strong>节点</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;"><span style="color: #0000ff;">&lt;?</span><span style="color: #ff00ff;">xml version="1.0" encoding="UTF-8"</span><span style="color: #0000ff;">?&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">project </span><span style="color: #ff0000;">xmlns</span><span style="color: #0000ff;">="http://maven.apache.org/POM/4.0.0"</span><span style="color: #ff0000;">
+         xmlns:xsi</span><span style="color: #0000ff;">="http://www.w3.org/2001/XMLSchema-instance"</span><span style="color: #ff0000;">
+         xsi:schemaLocation</span><span style="color: #0000ff;">="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span>&gt;4.0.0<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">modelVersion</span><span style="color: #0000ff;">&gt;</span>
+
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>com.cnblogs.kmpp<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>multi-module<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span>pom<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">packaging</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>1.0-SNAPSHOT<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">modules</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span>web-app<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span>web-service<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span>web-dal<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">module</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">modules</span><span style="color: #0000ff;">&gt;</span>
+<em><strong><span style="color: #ff6600;">&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.12&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;</span></strong></em>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">project</span><span style="color: #0000ff;">&gt;</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp;</span><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">当然如果将依赖移到父模块的dependencyManagement模块后，需要在子模块中将对应的依赖删除，否则，子模块的配置会覆盖父模块的配置。</span></p>
+<h1><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">三、版本号重复</span></h1>
+<h2><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">3.1 问题演示</span></h2>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;"> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>4.12<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate-annotations<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+           <strong><span style="color: #ff6600;"> &lt;version&gt;3.3.0.ga&lt;/version&gt;</span></strong>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate-commons-annotations<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+            <strong><span style="color: #ff6600;">&lt;version&gt;3.3.0.ga&lt;/version&gt;</span></strong>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+           <strong> <span style="color: #ff6600;"> &lt;version&gt;3.2.5.ga&lt;/version&gt;</span></strong>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp;</span><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">上面的pom配置中作为org.hibernate下面的组件，版本号重复了，一般来说，一个组织（groupid）下面的组件的版本号是一致的，且一起更新，和上面说的多个模块重复依赖一个组件类型，当同一个版本号多处出现时，如果修改，就会出现工作量大且有漏修改的风险。</span></p>
+<h2><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">3.2 解决</span></h2>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">使用属性元素（property），统一定义版本号，多处进行使用：</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;"><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">properties</span><span style="color: #0000ff;">&gt;</span>
+ <strong><span style="color: #ff6600;">   &lt;hibernate.annotations.version&gt;3.3.0.ga&lt;/hibernate.annotations.version&gt;</span></strong>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">properties</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencyManagement</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>junit<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>4.12<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">version</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate-annotations<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+            <strong><span style="color: #ff6600;">&lt;version&gt;${hibernate.annotations.version}&lt;/version&gt;</span></strong>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate-commons-annotations<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+           <strong><span style="color: #ff6600;"> &lt;version&gt;${hibernate.annotations.version}&lt;/version&gt;</span></strong>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>org.hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">groupId</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>hibernate<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+          <span style="color: #ff6600;"><strong>  &lt;version&gt;${hibernate.annotations.version}&lt;/version&gt;</strong></span>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencies</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependencyManagement</span><span style="color: #0000ff;">&gt;</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp;</span></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">这样当org.hibernate的版本号变化的时候只需要修改以地方。其实版本号类似于程序里面的magic number。不管是不是多次使用，最好都通过定义property来实现，上面的junit的版本号也应该预先在property中进行定义，然后再使用。</span></p>
+<h1><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">四、兄弟依赖</span></h1>
+<h2><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">4.1 问题</span></h2>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">web-app依赖web-dal和web-service组件</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+            <span style="color: #ff6600;">&lt;groupId&gt;com.cnblogs.kmpp&lt;/groupId&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>web-service<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+           <span style="color: #ff6600;"> &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+           <span style="color: #ff6600;"> &lt;groupId&gt;com.cnblogs.kmpp&lt;/groupId&gt;</span>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>web-dal<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+           <span style="color: #ff6600;"> &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp;上面的依赖同样有重复：groupId和version。</span></p>
+<h2><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">4.2 解决</span></h2>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">因为web-app、web-dal以及web-service作为兄弟模块他们的groupId和version是和父模块是一样的。所以兄弟依赖的groupId和version可以使用父模块的数据：</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">   <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+           <strong><span style="color: #ff6600;"> &lt;groupId&gt;${parent.groupId}&lt;/groupId&gt;</span></strong>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>web-service<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+            <strong><span style="color: #ff6600;">&lt;version&gt;${parent.version}&lt;/version&gt;</span></strong>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span>
+        <strong><span style="color: #ff6600;">    &lt;groupId&gt;${parent.groupId}&lt;/groupId&gt;</span></strong>
+            <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>web-dal<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">artifactId</span><span style="color: #0000ff;">&gt;</span>
+            <strong><span style="color: #ff6600;">&lt;version&gt;${parent.version}&lt;/version&gt;</span></strong>
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">dependency</span><span style="color: #0000ff;">&gt;</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">&nbsp;</span><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">当然，兄弟依赖的重复也可以通过property来定义解决，但是没有直接使用父模块属性方便。</span></p>
+<h1><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">五、maven 依赖分析</span></h1>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">maven已经提供了命令：</span></p>
+<ol>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">mvn dependency:analyze，使用该命令就可以看到maven分析的结果和建议</span></li>
+<li><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 16px;">mvn dependency:tree，使用该命令可以看到maven的依赖树。</span></li>
+</ol>
+<h1><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">六、结束语</span></h1>
+<p><span style="font-size: 16px; font-family: &#39;Microsoft YaHei&#39;;">DRY works everywhere and always will do.</span></p></div><div id="MySignature" style="display: block;"><div id="AllanboltSignature">    
+        <div>作者：<a href="http://www.cnblogs.com/Brake/" target="_blank">iBrake</a></div>
+        <div>出处：<a href="http://www.cnblogs.com/Brake/" target="_blank">http://www.cnblogs.com/Brake/</a></div>
+        <div>本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.</div>  
+    </div></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/Brake/category/744744.html" target="_blank">[09]代码构建</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/Brake/tag/maven/">maven</a>, <a href="http://www.cnblogs.com/Brake/tag/java/">java</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(4903044,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/Brake/" target="_blank"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/20151115183349.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/Brake/">iBrake</a><br>
+            <a href="http://home.cnblogs.com/u/Brake/followees">关注 - 3</a><br>
+            <a href="http://home.cnblogs.com/u/Brake/followers">粉丝 - 17</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(4903044,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(4903044,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html" title="发布于2015-10-21 22:57">Maven(4)-利用intellij idea创建maven 多模块项目</a><br><a href="http://www.cnblogs.com/Brake/p/design_pattern_eliminate_if_by_chain_of_responsibility.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/Brake/p/design_pattern_eliminate_if_by_chain_of_responsibility.html" title="发布于2015-10-24 23:29">设计模式-利用职责链模式消除if</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2015-10-23 09:22</span> <a href="http://www.cnblogs.com/Brake/">iBrake</a> 阅读(<span id="post_view_count">531</span>) 评论(<span id="post_comment_count">2</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=4903044" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/Brake/p/maven_pom_optimization.html#" onclick="AddToWz(4903044);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=220591,cb_entryId=4903044,cb_blogApp=currentBlogApp,cb_blogUserGuid='da4f5a3a-f5d5-e411-b908-9dcfd8948a71',cb_entryCreatedDate='2015/10/23 9:22:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Brake/p/maven_pom_optimization.html#3290823" class="layer">#1楼</a><a name="3290823" id="comment_anchor_3290823"></a>  <span class="comment_date">2015-10-23 15:32</span> <a id="a_comment_author_3290823" href="http://www.cnblogs.com/significantfrank/" target="_blank">significantfrank</a> <a href="http://msg.cnblogs.com/send/significantfrank" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3290823" class="blog_comment_body">你好，我是阿里巴巴架构师，觉得你blog写的不错，阿里的工作机会考虑下吗？ 我邮箱：fulan.zjf@alibaba-inc.com</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3290823,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3290823,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Brake/p/maven_pom_optimization.html#3291661" class="layer">#2楼</a><a name="3291661" id="comment_anchor_3291661"></a><span id="comment-maxId" style="display:none;">3291661</span><span id="comment-maxDate" style="display:none;">2015/10/25 17:35:01</span>  <span class="comment_date">2015-10-25 17:35</span> <a id="a_comment_author_3291661" href="http://www.cnblogs.com/aalex/" target="_blank">蟹粉小笼包</a> <a href="http://msg.cnblogs.com/send/%E8%9F%B9%E7%B2%89%E5%B0%8F%E7%AC%BC%E5%8C%85" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3291661" class="blog_comment_body">写的很清楚 谢谢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3291661,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3291661,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/Brake/p/maven_pom_optimization.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/Brake/p/maven_pom_optimization.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/76017.html" target="_blank">【活动】一元专享1500元微软智能云Azure</a><br></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block">     <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4210569241504288" data-ad-slot="5457903683"></ins></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/562717/" target="_blank">动视裁员</a><br> ·  <a href="http://news.cnblogs.com/n/562716/" target="_blank">小米电视3s48英寸和55英寸版涨价之后，60/65英寸即将涨价</a><br> ·  <a href="http://news.cnblogs.com/n/562715/" target="_blank">陈建军：mBack和腰圆键被抄袭？我不在乎</a><br> ·  <a href="http://news.cnblogs.com/n/562714/" target="_blank">乐视网重组停滞：乐视影业98亿元估值待定</a><br> ·  <a href="http://news.cnblogs.com/n/562713/" target="_blank">小米全面支持岭南通公交卡：这五款手机都可以</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank"><img width="468" height="60" src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/24442-20170118152220281-363324784.jpg" alt=""></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/554260/" target="_blank">「代码家」的学习过程和学习经验分享</a><br> ·  <a href="http://kb.cnblogs.com/page/556770/" target="_blank">写给未来的程序媛</a><br> ·  <a href="http://kb.cnblogs.com/page/558087/" target="_blank">高质量的工程代码为什么难写</a><br> ·  <a href="http://kb.cnblogs.com/page/555750/" target="_blank">循序渐进地代码重构</a><br> ·  <a href="http://kb.cnblogs.com/page/554496/" target="_blank">技术的正宗与野路子</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><a href="http://info.flagcounter.com/iyhy"><img src="./Maven(5)-优化和重构POM - iBrake - 博客园_files/saved_resource" alt="Free counters!" border="0"></a>
+<br>
+Name：Brake
+<br>
+Email：iBrake@126.com
+<br>
+Location：Shanghai<div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/Brake/">iBrake</a><br>园龄：<a href="http://home.cnblogs.com/u/Brake/" title="入园时间：2015-03-29">1年10个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/Brake/followers/">17</a><br>关注：<a href="http://home.cnblogs.com/u/Brake/followees/">3</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;da4f5a3a-f5d5-e411-b908-9dcfd8948a71&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block"></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/Brake/category/755958.html">[01]操作系统(17)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/Brake/category/763336.html">[02]算法数学</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/Brake/category/763334.html">[03]计算机网络</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/Brake/category/685498.html">[04]单元测试(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/Brake/category/768052.html">[05]并发编程</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/Brake/category/747986.html">[06]设计模式(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/Brake/category/686830.html">[07]UML(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/Brake/category/751650.html">[08]并行编程(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/Brake/category/744744.html">[09]代码构建(10)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/Brake/category/773991.html">[10]编程语言(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/Brake/category/774129.html">[11]计划总结(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/Brake/category/821404.html">[12]开发工具(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/Brake/archive/2016/08.html">2016年8月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/Brake/archive/2016/04.html">2016年4月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/Brake/archive/2016/03.html">2016年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/Brake/archive/2016/01.html">2016年1月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/Brake/archive/2015/12.html">2015年12月 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/Brake/archive/2015/11.html">2015年11月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/Brake/archive/2015/10.html">2015年10月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/Brake/archive/2015/05.html">2015年5月 (5)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	14690
+	</li>
+	<li class="liRank">
+		排名 -	16116
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Operating_System_Monitor.html#3587406">1. Re:Operating System-进程/线程内部通信-管程（Monitor）介绍，实现以及应用</a></li>
+        <li class="recent_comment_body">DIY not DRY</li>
+        <li class="recent_comment_author">--青竹梦</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html#3508147">2. Re:一个靠谱的maven仓库镜像地址</a></li>
+        <li class="recent_comment_body">@欢乐天谢谢...</li>
+        <li class="recent_comment_author">--iBrake</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Operating_System_Thread_Part1.html#3498347">3. Re:Operating System-Thread(1)What and Why Thread &amp;&amp;进程和线程的对比</a></li>
+        <li class="recent_comment_body">文章不错</li>
+        <li class="recent_comment_author">--Lumia1020</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/Parallel_Programming_Pipeline.html#3498329">4. Re:Parallel Programming-实现并行操作的流水线（生产者、消费者）</a></li>
+        <li class="recent_comment_body">收藏</li>
+        <li class="recent_comment_author">--Lumia1020</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/Brake/p/tomcat_and_servlet_part1.html#3493829">5. Re:Tomcat &amp;&amp; Servlet(1)</a></li>
+        <li class="recent_comment_body">博主做Java开发多久了？</li>
+        <li class="recent_comment_author">--王洪洪</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html">1. Maven(4)-利用intellij idea创建maven 多模块项目(2740)</a></li><li><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html">2. 一个靠谱的maven仓库镜像地址(2058)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part1.html">3. 使用Visual Studio进行单元测试-Part1(1109)</a></li><li><a href="http://www.cnblogs.com/Brake/p/create_maven_web_app_via_intellij_idea.html">4. Maven(3)-利用intellij idea创建maven web项目(771)</a></li><li><a href="http://www.cnblogs.com/Brake/p/UML-Design-Via-Visual-Studio-Class-Diagram.html">5. UML Design Via Visual Studio-Class Diagram(694)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/Brake/p/create_maven_multi_module_project_via_intellij_idea.html">1. Maven(4)-利用intellij idea创建maven 多模块项目(4)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part1.html">2. 使用Visual Studio进行单元测试-Part1(3)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part3.html">3. 使用Visual Studio进行单元测试-Part3(2)</a></li><li><a href="http://www.cnblogs.com/Brake/p/Unit-Test-Via-Visual-Studio-Part2.html">4. 使用Visual Studio进行单元测试-Part2(2)</a></li><li><a href="http://www.cnblogs.com/Brake/p/a-reliable-maven-mirror-address.html">5. 一个靠谱的maven仓库镜像地址(2)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2017 iBrake
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+<div class="wsx_fade" style="pointer-events: none;"></div><div class="wsx_scroll" style="display: block; opacity: 0; pointer-events: none; top: 84.2317px; height: 66.0166px;"><div class="wsx_scroll_bar" style="background-color: rgb(66, 119, 0); opacity: 0.6; border-radius: 3px; width: 6px; left: 19px;"></div></div></body></html>
