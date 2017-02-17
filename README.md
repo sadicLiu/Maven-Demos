@@ -36,6 +36,61 @@ project
 
 - 关于创建Maven Web项目，请参考res目录下第三篇文章
 - 关于创建多模块的Maven项目，请参考res目录下第四篇文章
+- 分享一个在idea中踩过的坑  
+创建多模块工程之后，在子模块的pom中已经配置了相应的依赖，但是写代码时仍然找不到相应的jar包，最后发现idea把这个pom文件忽略了。解决办法：`settings->Build,Execution,Deployment->Build Tools->Maven->Ignored Files`，勾选掉被忽略的文件
+
+## Maven继承（也就是在idea中创建多模块工程）
+
+- 用途：创建多模块项目，在父工程的pom中管理所有jar包的版本，每个子模块只需要引用自己所需的依赖即可，而且引用时只需定义GA坐标，版本号在父工程的pom中统一管理
+- 步骤：
+
+  1. 创建父工程，这个工程中不需要写代码，删除src目录即可。父工程的pom文件中，打包方式是pom，即`<packaging>pom</packaging>`
+  2. 父工程管理jar包版本的方式：
+
+    ```
+    <dependencyManagement>
+       <dependencies>
+           <dependency>
+               <groupId>junit</groupId>
+               <artifactId>junit</artifactId>
+               <version>4.12</version>
+               <scope>test</scope>
+           </dependency>
+       </dependencies>
+    </dependencyManagement>
+    ```
+
+  3. 这样指定每一个jar包的版本，子工程在引入jar包时，只需指定GA坐标即可：
+
+    ```
+    <dependencies>
+       <dependency>
+           <groupId>junit</groupId>
+           <artifactId>junit</artifactId>
+       </dependency>
+    </dependencies>
+    ```
+
+- 当父工程中管理的jar包很多时，如果要更新某个jar包的版本，找起来十分费事，我们可以用`<properties>`标签将版本号统一管理起来
+
+  ```
+  <properties>
+        <!-- 在这里定义Junit版本号-->
+      <junit.version>4.12</junit.version>
+  </properties>
+
+  <dependencyManagement>
+      <dependencies>
+          <dependency>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+              <!-- 在这里直接引用上面的定义-->
+              <version>${junit.version}</version>
+              <scope>test</scope>
+          </dependency>
+      </dependencies>
+  </dependencyManagement>
+  ```
 
 ## Maven核心概念
 
@@ -56,7 +111,7 @@ test        | -               | Y                | -                    | junit
 provided    | Y               | Y                | -                    | servlet-api
 runtime     | -               | -                | Y                    | JDBC Driver Implementation
 
-- 排除依赖
+- 排除依赖(没什么用，因为直接用多模块工程的话根本用不到这个)
 
 ```
 <exclusions>
@@ -66,50 +121,3 @@ runtime     | -               | -                | Y                    | JDBC D
     </exclusion>
 </exclusions>
 ```
-
-## Maven继承
-
-- 用途：创建多模块项目，在父工程的pom中管理所有jar包的版本，子模块直接引用即可，不会产生冗余
-- 步骤：
-  1. 创建父工程，这个工程中不需要写代码，删除src目录即可。父工程的pom文件中，打包方式是pom，即`<packaging>pom</packaging>`
-  2. 父工程管理jar包版本的方式：
-	```
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.12</version>
-				<scope>test</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	```
-  3. 这样指定每一个jar包的版本，子工程在引入jar包时，只需指定GA坐标即可：
-	```
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-	</dependencies>
-	```
-- 当父工程中管理的jar包很多时，如果要更新某个jar包的版本，找起来十分费事，我们可以用`<properties>`标签将版本号统一管理起来
-  ```
-  <properties>
-  	  <!-- 在这里定义Junit版本号-->
-	  <junit.version>4.12</junit.version>
-  </properties>
-
-  <dependencyManagement>
-	  <dependencies>
-		  <dependency>
-			  <groupId>junit</groupId>
-			  <artifactId>junit</artifactId>
-			  <!-- 在这里直接引用上面的定义-->
-			  <version>${junit.version}</version>
-			  <scope>test</scope>
-		  </dependency>
-	  </dependencies>
-  </dependencyManagement>
-  ```
